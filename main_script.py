@@ -82,7 +82,8 @@ print(f"Found {len(all_objects)} objects in S3 bucket.")
 
 # Process each S3 object
 data = []
-for audio in all_objects[:13]:
+# all_objects[:13] <- this sets it to a sample set and quick run
+for audio in all_objects:
     try:
         result = process_s3_object(audio)
         if result:

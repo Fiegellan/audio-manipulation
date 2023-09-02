@@ -15,8 +15,8 @@ This repository contains a script for processing audio files stored in an S3 buc
 
 1. Clone this repository:
     ```bash
-    git clone <your-repo-url>
-    cd <your-repo-directory>
+    git clone https://github.com/Fiegellan/audio-manipulation.git
+    cd audio-manipulation
     ```
 
 2. Build the Docker image:
@@ -62,10 +62,11 @@ The script does the following:
 
 ### Accessing Environment Variables in the Script
 
-We use the `python-decouple` library to manage environment variables. This allows us to easily load and use variables from the `.env` file:
+We use the `dotenv` library to manage environment variables. This allows us to easily load and use variables from the `.env` file:
 
 ```python
-from decouple import config
+from dotenv import load_dotenv
+load_dotenv()
 
 S3_ACCESS_KEY = config('S3_ACCESS_KEY')
 S3_SECRET_KEY = config('S3_SECRET_KEY')
@@ -77,10 +78,18 @@ BUCKET_NAME = config('BUCKET_NAME')
 
 The processed data is saved as a parquet file inside the container at `/app/data`. Thanks to Docker's volume mounting, this data is also saved to the specified directory on your host machine.
 
-## Issues & Contributions
+# Thoughts and word dump
 
-If you encounter any issues or would like to contribute to this project, please open an issue or submit a pull request!
 
 ---
 
-Make sure to customize `<your-repo-url>` and `<your-repo-directory>` placeholders with appropriate values for your repository.
+This is a 2.5 hour code challenge that includes the notebook on how I did ADA and started the analysis and then built it out.  
+Main.py was my first go to
+main_script.py is a bit cleaner and cleaned up
+
+If I had more time I would work on paralizing the runs, batch download from s3, caching, and add logging vs print statements
+I added more parquet partitioning information - i saw some audio may not be in english
+The removal of the audio file also helps with memory control
+Being in a container, means we can throw it at any compute engine we want and change cloud services if we need to
+
+Really fun project, first time really working with audio files and being able to transcribe them!  Thank you for this opportunity and sorry it took longer to get to than planned originally.
